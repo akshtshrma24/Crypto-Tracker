@@ -20,11 +20,11 @@ public class crypto {
 
 
     public static void main(String[] args) throws IOException, JSONException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/home/akshit/Crypto API/zelda_wind_waker.wav").getAbsoluteFile());
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("ENTER_YOUR_DIRECTORY_FOR_THE_ATTACHED_MUSIC_FILES").getAbsoluteFile());
         Clip clipUP = AudioSystem.getClip();
         clipUP.open(audioInputStream);
         Clip clipDown = AudioSystem.getClip();
-        audioInputStream = AudioSystem.getAudioInputStream((new File("/home/akshit/Crypto API/hunter_x_hunter_riot.wav")));
+        audioInputStream = AudioSystem.getAudioInputStream((new File("ENTER_YOUR_DIRECTORY_FOR_THE_ATTACHED_MUSIC_FILES")));
         clipDown.open(audioInputStream);
 
         Scanner in = new Scanner(System.in);
