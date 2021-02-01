@@ -36,7 +36,7 @@ public class crypto {
 
         while(1 == 1)
         {
-            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=E38A1288-9A87-446D-B889-FDA548D2D309");
+            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=ENTER_YOUR_API_KEY_HERE");
             connection = (HttpURLConnection) connect.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(FIVE_SECONDS);
