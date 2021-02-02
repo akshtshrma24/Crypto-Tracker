@@ -14,18 +14,15 @@ public class crypto {
     public static URL connect;
     private static HttpURLConnection connection;
     private static final int FIVE_SECONDS = 5000;
+    private static final int THIRY_MINUTES = 1800000;
+    private static final int TWO_MINUTES = 120000;
+    private static final int MINIMUM_TIME_FOR_MAX_CHECKS_ON_ONE = 864000;
     private static int iD;
     public static String cryptoChoice;
-    private static final int THIRY_MINUTES = 1800000;
 
 
     public static void main(String[] args) throws IOException, JSONException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("ENTER_YOUR_DIRECTORY_FOR_THE_ATTACHED_MUSIC_FILES").getAbsoluteFile());
-        Clip clipUP = AudioSystem.getClip();
-        clipUP.open(audioInputStream);
-        Clip clipDown = AudioSystem.getClip();
-        audioInputStream = AudioSystem.getAudioInputStream((new File("ENTER_YOUR_DIRECTORY_FOR_THE_ATTACHED_MUSIC_FILES")));
-        clipDown.open(audioInputStream);
+
 
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the Crypto You would like to Check e.g ADA: ");
@@ -36,7 +33,15 @@ public class crypto {
 
         while(1 == 1)
         {
-            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=ENTER_YOUR_API_KEY_HERE");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/home/akshit/Crypto API/zelda_flute.wav").getAbsoluteFile());
+            Clip clipUP = AudioSystem.getClip();
+            clipUP.open(audioInputStream);
+            Clip clipDown = AudioSystem.getClip();
+            audioInputStream = AudioSystem.getAudioInputStream((new File("/home/akshit/Crypto API/zelda_navi_listen.wav")));
+            clipDown.open(audioInputStream);
+            clipUP.open();
+            clipDown.open();
+            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=E38A1288-9A87-446D-B889-FDA548D2D309");
             connection = (HttpURLConnection) connect.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(FIVE_SECONDS);
@@ -60,7 +65,7 @@ public class crypto {
                 JSONObject temp = rates.getJSONObject(i);
                 if (temp.getString("asset_id_quote").equals("USDT")) {
 
-                    System.out.println("One " + cryptoChoice + " is equal to $" + temp.get("rate"));
+                    System.out.printf("%nOne " + cryptoChoice + " is equal to $" + temp.get("rate") + "  Time Now: " + temp.get("time"));
 
                     if (isThisTheFirst == 0) {
                         isThisTheFirst = 1;
@@ -70,18 +75,24 @@ public class crypto {
                         double increaseOrDecrease = previous - ((double) temp.get("rate"));
                         if (increaseOrDecrease < 0) {
                             clipUP.start();
-                            System.out.printf("It has Gone up by $%.17f", increaseOrDecrease * -1);
+                            System.out.printf("%nIt has Gone up by $%.18f", increaseOrDecrease * -1);
+
                         } else if (increaseOrDecrease > 0) {
                             clipDown.start();
-                            System.out.printf("It has Gone down by $%.17f", increaseOrDecrease);
+                            System.out.printf("%nIt has Gone down by $%.18f", increaseOrDecrease);
+
                         } else {
-                            System.out.println("IT HAS STAYED THE SAME!!!");
+                            System.out.println("%nIT HAS STAYED THE SAME!!!");
                         }
                         previous = (double) temp.get("rate");
                     }
                 }
             }
-            Thread.sleep(THIRY_MINUTES);
+            Thread.sleep(MINIMUM_TIME_FOR_MAX_CHECKS_ON_ONE);
+            clipUP.stop();
+            clipDown.stop();
+            clipUP.close();
+            clipDown.close();
         }
     }
 }
