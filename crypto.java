@@ -33,15 +33,15 @@ public class crypto {
 
         while(1 == 1)
         {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/home/akshit/Crypto API/zelda_flute.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("FILE_PATH").getAbsoluteFile());
             Clip clipUP = AudioSystem.getClip();
             clipUP.open(audioInputStream);
             Clip clipDown = AudioSystem.getClip();
-            audioInputStream = AudioSystem.getAudioInputStream((new File("/home/akshit/Crypto API/zelda_navi_listen.wav")));
+            audioInputStream = AudioSystem.getAudioInputStream((new File("FILE_PATH")));
             clipDown.open(audioInputStream);
             clipUP.open();
             clipDown.open();
-            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=E38A1288-9A87-446D-B889-FDA548D2D309");
+            connect = new URL("https://rest.coinapi.io/v1/exchangerate/" + cryptoChoice + "?apikey=YOUR_API_KEY_HERE");
             connection = (HttpURLConnection) connect.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(FIVE_SECONDS);
